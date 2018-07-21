@@ -125,11 +125,16 @@ $(document).ready(function () {
 </div>
 
 
+<div id="improving-r-perfomance-by-installing-optimized-blaslapack-libraries" class="section level1">
+<h1>Improving R Perfomance by installing optimized BLAS/LAPACK libraries</h1>
 <p>Carlos Santillan</p>
 <p>Princpal Software Engineer</p>
 <p>Bentley Systems Inc.</p>
 <p><a href="https://www.linkedin.com/in/carlos-santillan/" class="uri">https://www.linkedin.com/in/carlos-santillan/</a></p>
 <p><a href="mailto:csantill@gmail.com">csantill@gmail.com</a></p>
+<p><a href="https://github.com/csantill/RPerformanceWBLAS" class="uri">https://github.com/csantill/RPerformanceWBLAS</a></p>
+<hr />
+</div>
 <div id="base-libraries" class="section level1">
 <h1>Base Libraries</h1>
 <div id="blas" class="section level2">
@@ -139,6 +144,7 @@ $(document).ready(function () {
 <div id="lapack" class="section level2">
 <h2>LAPACK</h2>
 <p>LAPACK is written in Fortran 90 and provides routines for solving systems of simultaneous linear equations, least-squares solutions of linear systems of equations, eigenvalue problems, and singular value problems. The associated matrix factorizations (LU, Cholesky, QR, SVD, Schur, generalized Schur) are also provided, as are related computations such as reordering of the Schur factorizations and estimating condition numbers. Dense and banded matrices are handled, but not general sparse matrices. In all areas, similar functionality is provided for real and complex matrices, in both single and double precision.</p>
+<hr />
 <p>You can use sessionInfo() in R to see which version of BLAS and LAPACK your R session is using</p>
 <pre><code>sessionInfo()</code></pre>
 <p>Here is the output when using the default BLAS/LAPACK libraries</p>
@@ -168,6 +174,7 @@ $(document).ready(function () {
 ##  [5] tools_3.4.4     htmltools_0.3.6 yaml_2.1.19     Rcpp_0.12.17   
 ##  [9] stringi_1.2.3   rmarkdown_1.10  knitr_1.20      stringr_1.3.1  
 ## [13] digest_0.6.15   evaluate_0.10.1</code></pre>
+<hr />
 </div>
 </div>
 <div id="alternative-libraries" class="section level1">
@@ -191,6 +198,7 @@ $(document).ready(function () {
 <p>Features highly optimized, threaded, and vectorized math functions that maximize performance on each processor family Uses industry-standard C and Fortran APIs for compatibility with popular BLAS, LAPACK, and FFTW functions—no code changes required</p>
 <p>The Intel MKL used to a commercial product, free for student use, paid license for other uses, it looks like it is now free</p>
 <p><em>Free for all, no royalties, no restrictions on company or project size, access to current &amp; older versions of libraries (only current version for Intel® MPI), Forum Support.</em></p>
+<hr />
 </div>
 <div id="installing-the-libraries" class="section level2">
 <h2>Installing the libraries</h2>
@@ -247,6 +255,7 @@ echo &quot;MKL_THREADING_LAYER=GNU&quot; &gt;&gt; /etc/environment</code></pre>
 <p>The current version, Microsoft R Open 3.5.0, is based on (and 100% compatible with) R-3.5.0, has full compatibility with all packages, scripts and applications that work with R. It includes additional capabilities for improved performance, reproducibility, and support for Windows, Linux-based and OS X platforms.</p>
 <p>(Windows and Linux version use Intel MKL libraries, OS X uses Accelerate ML)</p>
 <p><a href="https://mran.microsoft.com/open" class="uri">https://mran.microsoft.com/open</a></p>
+<hr />
 </div>
 <div id="selecting-the-default-blaslapack" class="section level1">
 <h1>Selecting the default BLAS/LAPACK</h1>
@@ -285,6 +294,7 @@ There are 4 choices for the alternative liblapack.so.3-x86_64-linux-gnu (providi
 
 Press &lt;enter&gt; to keep the current choice[*], or type selection number: 
 </code></pre>
+<hr />
 </div>
 </div>
 <div id="benchmarks" class="section level1">
@@ -361,6 +371,7 @@ LAPACK: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/ve
 <div id="windows" class="section level1">
 <h1>Windows</h1>
 <p>While it is possible to use alternative BLAS and LAPACK libraries on Windows, I found it easier just to use Microsoft R Open</p>
+<hr />
 <div id="amdahls-law" class="section level2">
 <h2>Amdahl’s law</h2>
 <p>Amdahl’s law is a formula which gives the theoretical speedup in latency of the execution of a task at fixed workload that can be expected of a system whose resources are improved.</p>
