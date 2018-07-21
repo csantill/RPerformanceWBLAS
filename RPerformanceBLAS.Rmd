@@ -91,6 +91,9 @@ Intel Math Kernel Library
 Features highly optimized, threaded, and vectorized math functions that maximize performance on each processor family
 Uses industry-standard C and Fortran APIs for compatibility with popular BLAS, LAPACK, and FFTW functions—no code changes required
 
+The Intel MKL used to a commercial product, free for student use, paid license for other uses, it looks like it is now free 
+
+*Free for all, no royalties, no restrictions on company or project size, access to current & older versions of libraries (only current version for Intel® MPI), Forum Support.*
 
 ##  Installing the libraries
 
@@ -116,7 +119,7 @@ Install OpenBLAS and AtlasBLAS wit the following command
 $ sudo apt-get install libopenblas-base libatlas3-base
 ```
 
-Installing the Intel MKL 
+## Installing the Intel MKL 
 
 The following script form ["Adding Intel MKL easily via a simple script"](
 http://dirk.eddelbuettel.com/blog/2018/04/15/) provides a simple way to install the Intel MKL
@@ -229,12 +232,12 @@ B<-c(1.028,	  1.030	 , 1.030	  ,  1.024)
 C<-c(1.423,	  1.433,	  1.346,	    1.441)
 D<-c(20.687	,  0.789,	  0.577	 ,   3.756)
 E<-c(9.898,	  0.561	,  0.322	,    1.939)
-totalTime <-  c(60.932,	11.222,	9.563,	19.158)
 
-df <- data.frame(name=as.factor(lib),time=totalTime,A=A,B=B,C=C,D=D,E=E)
-df$name <- factor(df$name, levels = df$name[order(-df$time)])
 
-dfnew <- melt(df %>% subset(select= - c(time)),id.vars='name')
+df <- data.frame(name=as.factor(lib),A=A,B=B,C=C,D=D,E=E)
+df$name <- factor(df$name, levels = df$name[order(-df$D)])
+
+dfnew <- melt(df ,id.vars='name')
 #ggplot(df,aes(x=name,y=time)) + geom_bar(stat="identity")
 
 #ggplot(dfnew, aes(x=name, y=value, fill=variable)) +
@@ -255,10 +258,22 @@ E) Linear regr. over a 3000x3000 matrix (c = a \ b')___ :		9.898	  0.561	  0.322
 ```
 
 ```{r  echo=FALSE}
-
+library(ggplot2)
 ggplot(dfnew, aes(x=name, y=value, fill=variable)) +
-    geom_bar(stat='identity')
+    geom_bar(position="dodge",stat='identity')
+
+F<-c(	0.575	,  0.535	,  0.570,	    0.534)
+G<-c(1.470,	  1.028	,  0.480 ,    0.921)
+H<-c(6.727,	  0.456,	  0.322	,    1.873)
+I<-c(	8.314	,  0.444,	  0.321	,    1.617)
+J<-c(6.069,	  0.493	,  0.296,	    1.603)
+df <- data.frame(name=as.factor(lib),F=F,G=G,H=H,I=I,J=J)
+df$name <- factor(df$name, levels = df$name[order(-df$J)])
+
+dfnew <- melt(df ,id.vars='name')
+
 ```
+
 ```
 
 Trimmed geom. mean (2 extremes eliminated)		            2.717	  1.047	  0.928	    1.565
@@ -268,20 +283,68 @@ G) Eigenvalues of a 640x640 random matrix______________ :		1.470	  1.028	  0.480
 H) Determinant of a 2500x2500 random matrix____________ :		6.727	  0.456	  0.322	    1.873
 I) Cholesky decomposition of a 3000x3000 matrix________ :		8.314	  0.444	  0.321	    1.617
 J) Inverse of a 1600x1600 random matrix________________ :		6.069	  0.493	  0.296	    1.603
-					
+
 Trimmed geom. mean (2 extremes eliminated)		     :      3.915 	0.494	  0.368	    1.336
+```
+
+```{r  echo=FALSE}
+
+ggplot(dfnew, aes(x=name, y=value, fill=variable)) +
+    geom_bar(position="dodge",stat='identity')
+
+K<-c(	1.069,	  1.035	 , 1.006,    1.029)
+L<-c(0.530,	  0.497	,  0.510	,    0.493)
+M<-c(	0.502,	  0.500	,  0.579	,    0.478)
+N<-c(	0.580,	  0.540	,  0.086,	    0.542)
+O<-c(0.636,	  0.469,	  0.507	 ,   0.538)
+df <- data.frame(name=as.factor(lib),K=K,L=L,M=M,N=N,O=O)
+df$name <- factor(df$name, levels = df$name[order(-df$K)])
+
+dfnew <- melt(df ,id.vars='name')
+```
+
+```
 
 K) 3,500,000 Fibonacci numbers calculation (vector calc):		1.069	  1.035	  1.006	    1.029
 L) Creation of a 3000x3000 Hilbert matrix (matrix calc) :		0.530	  0.497	  0.510	    0.493
 N) Grand common divisors of 400,000 pairs (recursion)__ :		0.502	  0.500	  0.579	    0.478
 M) Creation of a 500x500 Toeplitz matrix (loops)_______ :		0.580	  0.540	  0.086	    0.542
 O) Escoufier's method on a 45x45 matrix (mixed)________ :		0.636	  0.469	  0.507	    0.538
+
+
+```
+```{r  echo=FALSE}
+
+ggplot(dfnew, aes(x=name, y=value, fill=variable)) +
+    geom_bar(position="dodge",stat='identity')
+totalTime <-  c(60.932,	11.222,	9.563,	19.158)
+
+df <- data.frame(name=as.factor(lib),totalTime=totalTime)
+df$name <- factor(df$name, levels = df$name[order(-df$totalTime)])
+
+dfnew <- melt(df ,id.vars='name')
+
+
+
+```
+```
 					
 Trimmed geom. mean (2 extremes eliminated)		     :      0.580	  0.512	  0.531	    0.524
 Total time for all 15 tests_________________________ :	   60.932     11.222  9.563     19.158
 Overall mean (sum of I, II and III trimmed means/3)_ :		1.834	  0.642	  0.566	    1.031
 ```
+```{r  echo=FALSE}
 
+
+df <- data.frame(name=as.factor(lib),totalTime=totalTime)
+df$name <- factor(df$name, levels = df$name[order(-df$totalTime)])
+
+dfnew <- melt(df ,id.vars='name')
+
+ggplot(dfnew, aes(x=name, y=value, fill=variable)) +
+    geom_bar(position="dodge",stat='identity')
+
+```
 
 
 # Results
