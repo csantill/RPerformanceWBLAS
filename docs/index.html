@@ -299,7 +299,11 @@ Press &lt;enter&gt; to keep the current choice[*], or type selection number:
 </div>
 <div id="benchmarks" class="section level1">
 <h1>BenchMarks</h1>
-<p>Base BLAS/LAPACK</p>
+<p>I ran the R Benchmark 2.5 scripts under each of the configurations. The accompanying article <a href="https://www.r-bloggers.com/why-is-r-slow-some-explanations-and-mklopenblas-setup-to-try-to-fix-this/">Why is R slow? some explanations and MKL/OpenBLAS setup to try to fix this</a> was one of the references I used.</p>
+<p>The script I used can be found</p>
+<p><a href="https://github.com/pachamaltese/r-with-intel-mkl/blob/master/00-benchmark-scripts/1-r-benchmark-25.R" class="uri">https://github.com/pachamaltese/r-with-intel-mkl/blob/master/00-benchmark-scripts/1-r-benchmark-25.R</a></p>
+<p>And can be run from</p>
+<pre><code>source(&quot;1-r-benchmark-25.R&quot;)</code></pre>
 <p>As can be seen from the Benchmark results OpenBLAS is about 2.85 times faster than the default BLAS and MKL is about 3.25 times faster, also AtlasBLAS is about twice as fast as the default. With some operations such as Matrix Cross Product being over 20 times faster.</p>
 <pre><code>   R Benchmark 2.5
    ===============
