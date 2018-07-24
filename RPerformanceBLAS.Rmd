@@ -108,6 +108,9 @@ The Intel MKL used to a commercial product, free for student use, paid license f
 
 
 We can use apt-cache search to see what libblas debian packages are available to install
+```
+apt-cache search libblas
+```
 
 ```
 csantill@gawain:/usr/bin$ apt-cache search libblas
@@ -132,7 +135,9 @@ $ sudo apt-get install libopenblas-base libatlas3-base
 
 The following script form ["Adding Intel MKL easily via a simple script"](
 http://dirk.eddelbuettel.com/blog/2018/04/15/) provides a simple way to install the Intel MKL
-
+```
+sudo script.sh
+```
 
 ```
 #!/bin/bash
@@ -185,8 +190,11 @@ Note: You will have to to restart R/R Studio for the change to take effect, you 
 
 ## Change default BLAS
 
-sudo update-alternatives --config libblas.so.3-x86_64-linux-gnu
+Run update-alternatives to select one of the installed Alternatives
 
+```
+sudo update-alternatives --config libblas.so.3-x86_64-linux-gnu
+```
 ```
 csantill@gawain:~$ sudo update-alternatives --config libblas.so.3-x86_64-linux-gnu
 There are 4 choices for the alternative libblas.so.3-x86_64-linux-gnu (providing /usr/lib/x86_64-linux-gnu/libblas.so.3).
@@ -205,8 +213,9 @@ Press <enter> to keep the current choice[*], or type selection number:
 
 ## Change default LAPACK
 
-
+```
 sudo update-alternatives --config liblapack.so.3-x86_64-linux-gnu
+```
 
 ```
 csantill@gawain:~$ sudo update-alternatives --config liblapack.so.3-x86_64-linux-gnu
@@ -371,7 +380,7 @@ ggplot(dfnew, aes(x=name, y=value, fill=variable)) +
 
 The Intel MKL (Microsoft R open)) are the clear winners for the used configuration. They are faster in most operations than OpenBLAS or ATLAS, It should be noted that while the MKL performs faster when running on Intel CPUs, OpenBLAS is typically faster on AMD CPUs.
 
-
+***
 ## Paralell Development
 
 OpenBLAS and the Intel MKL (and R Open) take advantage of multiple cores and multithreading, For some operations they will use multiple threads. This is great if your operation is serial in nature but it could interfer if you are trying to perform parallel operations (such as parallel foreach, parapply, etc.) 
@@ -392,16 +401,25 @@ if you are using MKL then you should set environment variable MKL_NUM_THREADS ( 
 ```
 export MKL_NUM_THREADS=1
 ```
-
+***
 # Mac
 
 Apple provides the Accelarate Framework which includes optimized BLAS libraries (veclib)
 
-In order for R to take advantage of these all you have to do is the following :
+The following article [R: Use faster vecLib](https://gist.github.com/nicebread/6920c8287d7bffb03007)
 
 ```
+
+## Enter these commands in the Mac OS Terminal
+
+# use faster vecLib library
 cd /Library/Frameworks/R.framework/Resources/lib
 ln -sf  /System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Versions/Current/libBLAS.dylib libRblas.dylib
+
+# return to default settings
+cd /Library/Frameworks/R.framework/Resources/lib
+ln -sf libRblas.0.dylib libRblas.dylib
+
 ```
 
 sessionInfo() should return something similar to below if you are using the Accelerate Framework
@@ -419,12 +437,15 @@ The following article shows how to set up OpenBLAS on a Mac
 
 https://luisspuerto.net/blog/2018/01/12/install-r-100-homebrew-edition-with-openblas-openmp-my-version/
 
+
+***
 # Windows
 
 While it is possible to use alternative BLAS and LAPACK libraries on Windows, I found it easier just to use Microsoft R Open
 
+***
 
-
+<!--
 ***
 
 ## Amdahl's law
@@ -458,7 +479,7 @@ The percentageImprovent will be
 
 "*Make it work, Make it right, Make it Fast*" **Kent Beck**
 
-
+-->
 
 #Resources
 

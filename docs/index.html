@@ -203,6 +203,7 @@ $(document).ready(function () {
 <div id="installing-the-libraries" class="section level2">
 <h2>Installing the libraries</h2>
 <p>We can use apt-cache search to see what libblas debian packages are available to install</p>
+<pre><code>apt-cache search libblas</code></pre>
 <pre><code>csantill@gawain:/usr/bin$ apt-cache search libblas
 libblas-dev - Basic Linear Algebra Subroutines 3, static library
 libblas3 - Basic Linear Algebra Reference implementations, shared library
@@ -219,6 +220,7 @@ libopenblas-dev - Optimized BLAS (linear algebra) library (development files)</c
 <div id="installing-the-intel-mkl" class="section level2">
 <h2>Installing the Intel MKL</h2>
 <p>The following script form <a href="http://dirk.eddelbuettel.com/blog/2018/04/15/">“Adding Intel MKL easily via a simple script”</a> provides a simple way to install the Intel MKL</p>
+<pre><code>sudo script.sh</code></pre>
 <pre><code>#!/bin/bash
 ##
 ## cf https://software.intel.com/en-us/articles/installing-intel-free-libs-and-python-apt-repo
@@ -263,7 +265,8 @@ echo &quot;MKL_THREADING_LAYER=GNU&quot; &gt;&gt; /etc/environment</code></pre>
 <p>Note: You will have to to restart R/R Studio for the change to take effect, you can use sessionInfo() to confirm that you are using the library you want</p>
 <div id="change-default-blas" class="section level2">
 <h2>Change default BLAS</h2>
-<p>sudo update-alternatives –config libblas.so.3-x86_64-linux-gnu</p>
+<p>Run update-alternatives to select one of the installed Alternatives</p>
+<pre><code>sudo update-alternatives --config libblas.so.3-x86_64-linux-gnu</code></pre>
 <pre><code>csantill@gawain:~$ sudo update-alternatives --config libblas.so.3-x86_64-linux-gnu
 There are 4 choices for the alternative libblas.so.3-x86_64-linux-gnu (providing /usr/lib/x86_64-linux-gnu/libblas.so.3).
 
@@ -280,7 +283,7 @@ Press &lt;enter&gt; to keep the current choice[*], or type selection number:
 </div>
 <div id="change-default-lapack" class="section level2">
 <h2>Change default LAPACK</h2>
-<p>sudo update-alternatives –config liblapack.so.3-x86_64-linux-gnu</p>
+<pre><code>sudo update-alternatives --config liblapack.so.3-x86_64-linux-gnu</code></pre>
 <pre><code>csantill@gawain:~$ sudo update-alternatives --config liblapack.so.3-x86_64-linux-gnu
 There are 4 choices for the alternative liblapack.so.3-x86_64-linux-gnu (providing /usr/lib/x86_64-linux-gnu/liblapack.so.3).
 
@@ -345,6 +348,7 @@ Overall mean (sum of I, II and III trimmed means/3)_ :      1.834     0.642   0.
 <div id="results" class="section level1">
 <h1>Results</h1>
 <p>The Intel MKL (Microsoft R open)) are the clear winners for the used configuration. They are faster in most operations than OpenBLAS or ATLAS, It should be noted that while the MKL performs faster when running on Intel CPUs, OpenBLAS is typically faster on AMD CPUs.</p>
+<hr />
 <div id="paralell-development" class="section level2">
 <h2>Paralell Development</h2>
 <p>OpenBLAS and the Intel MKL (and R Open) take advantage of multiple cores and multithreading, For some operations they will use multiple threads. This is great if your operation is serial in nature but it could interfer if you are trying to perform parallel operations (such as parallel foreach, parapply, etc.)</p>
@@ -355,14 +359,24 @@ Overall mean (sum of I, II and III trimmed means/3)_ :      1.834     0.642   0.
 <pre><code>setMKLthreads(1)</code></pre>
 <p>if you are using MKL then you should set environment variable MKL_NUM_THREADS ( you can set this in your .profile )</p>
 <pre><code>export MKL_NUM_THREADS=1</code></pre>
+<hr />
 </div>
 </div>
 <div id="mac" class="section level1">
 <h1>Mac</h1>
 <p>Apple provides the Accelarate Framework which includes optimized BLAS libraries (veclib)</p>
-<p>In order for R to take advantage of these all you have to do is the following :</p>
-<pre><code>cd /Library/Frameworks/R.framework/Resources/lib
-ln -sf  /System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Versions/Current/libBLAS.dylib libRblas.dylib</code></pre>
+<p>The following article <a href="https://gist.github.com/nicebread/6920c8287d7bffb03007">R: Use faster vecLib</a></p>
+<pre><code>
+## Enter these commands in the Mac OS Terminal
+
+# use faster vecLib library
+cd /Library/Frameworks/R.framework/Resources/lib
+ln -sf  /System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Versions/Current/libBLAS.dylib libRblas.dylib
+
+# return to default settings
+cd /Library/Frameworks/R.framework/Resources/lib
+ln -sf libRblas.0.dylib libRblas.dylib
+</code></pre>
 <p>sessionInfo() should return something similar to below if you are using the Accelerate Framework</p>
 <pre><code>Matrix products: default
 BLAS: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
@@ -371,27 +385,47 @@ LAPACK: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/ve
 <p>I was unable to find benchmark results for this, but did find reports of performance similar to that of OpenBLAS.</p>
 <p>The following article shows how to set up OpenBLAS on a Mac</p>
 <p><a href="https://luisspuerto.net/blog/2018/01/12/install-r-100-homebrew-edition-with-openblas-openmp-my-version/" class="uri">https://luisspuerto.net/blog/2018/01/12/install-r-100-homebrew-edition-with-openblas-openmp-my-version/</a></p>
+<hr />
 </div>
 <div id="windows" class="section level1">
 <h1>Windows</h1>
 <p>While it is possible to use alternative BLAS and LAPACK libraries on Windows, I found it easier just to use Microsoft R Open</p>
 <hr />
-<div id="amdahls-law" class="section level2">
-<h2>Amdahl’s law</h2>
-<p>Amdahl’s law is a formula which gives the theoretical speedup in latency of the execution of a task at fixed workload that can be expected of a system whose resources are improved.</p>
-<p><span class="math display">\[S_{latency} = \frac{1}{(1-p)+(\frac{p}{s})}\]</span> Where s is the speedup p is the portion that benefits from the speedup.</p>
-<p><span class="math display">\[ Percentage Improvement = 100 ( 1- (\frac{1}{S_{latency}})) \]</span> For example:</p>
-<p>If we improve the performance of a function by 200 % and this function takes 40% of our calculation , then our overall performance improvement will be of only 20%</p>
-<p>p=0.40</p>
-<p>s=2</p>
-<p><span class="math display">\[S_{latency} = \frac{1}{(1-.40)+(\frac{.40}{2})} = 1.25\]</span> The percentageImprovent will be</p>
-<p><span class="math display">\[ Percentage Improvement = 100 ( 1- (\frac{1}{1.25})) = 20 \%\]</span></p>
-</div>
-</div>
-<div id="final-words" class="section level1">
-<h1>Final words</h1>
-<p>”<em>We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil.</em>” - <strong>Donald Knuth</strong></p>
-<p>“<em>Make it work, Make it right, Make it Fast</em>” <strong>Kent Beck</strong></p>
+<!--
+***
+
+## Amdahl's law
+Amdahl's law is a formula which gives the theoretical speedup in latency of the execution of a task at fixed workload that can be expected of a system whose resources are improved. 
+
+$$S_{latency} = \frac{1}{(1-p)+(\frac{p}{s})}$$
+Where
+s is the speedup
+p is the portion that benefits from the speedup.
+
+
+
+ $$ Percentage Improvement = 100 ( 1- (\frac{1}{S_{latency}})) $$
+For example:
+
+If we improve the performance of a function by 200 % and this function takes 40% of our calculation , then our overall performance improvement will be of only 20%
+
+p=0.40
+
+s=2
+
+$$S_{latency} = \frac{1}{(1-.40)+(\frac{.40}{2})} = 1.25$$
+The percentageImprovent will be 
+
+ $$ Percentage Improvement = 100 ( 1- (\frac{1}{1.25})) = 20 \%$$
+
+
+# Final words 
+
+”*We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil.*” - **Donald Knuth**
+
+"*Make it work, Make it right, Make it Fast*" **Kent Beck**
+
+-->
 </div>
 <div id="resources" class="section level1">
 <h1>Resources</h1>
