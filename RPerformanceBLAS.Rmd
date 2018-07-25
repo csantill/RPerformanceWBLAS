@@ -6,7 +6,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-<center>
+
 
 # Improving R Perfomance by installing optimized BLAS/LAPACK libraries
 
@@ -25,7 +25,7 @@ csantill@gmail.com
 
 https://github.com/csantill/RPerformanceWBLAS
 
-</center>
+
 
 
 ***
