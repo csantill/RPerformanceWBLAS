@@ -22,6 +22,12 @@ csantill@gmail.com
 https://github.com/csantill/RPerformanceWBLAS
 
 ***
+
+The precompiled R distribution that is downloaded from CRAN makes use of the reference BLAS/LAPACK implementation for linear algebra operations, These implementations are built to be stabled and cross platform compatible but are not optimized for performance. 
+
+
+
+***
 # Base Libraries
 ## BLAS 
 
@@ -34,7 +40,9 @@ LAPACK is written in Fortran 90 and provides routines for solving systems of sim
 
 ***
 
-You can use sessionInfo() in R to see which version of BLAS and LAPACK  your R session is using
+
+
+You can use sessionInfo() in R to see which version of BLAS and LAPACK your R session is using
 
 ```
 sessionInfo()
@@ -87,7 +95,6 @@ OpenBLAS is an optimized BLAS library based on GotoBLAS2 1.13 BSD version
 
 The ATLAS (Automatically Tuned Linear Algebra Software) project is an ongoing research effort focusing on applying empirical techniques in order to provide portable performance. 
 
-
 #GotoBLAS
 GotoBLAS and GotoBLAS2 are open source implementations of the BLAS (Basic Linear Algebra Subprograms) API with many hand-crafted optimizations for specific processor types. GotoBLAS was developed by Kazushige Goto at the Texas Advanced Computing Center (UT). As of 2003, it was used in seven of the world's ten fastest supercomputers.
 
@@ -102,11 +109,17 @@ The Intel MKL used to a commercial product, free for student use, paid license f
 
 *Free for all, no royalties, no restrictions on company or project size, access to current & older versions of libraries (only current version for Intel® MPI), Forum Support.*
 
+
+## 
+
+The above mentioned libraries are highly optimized for the Intel
+
+
 ***
 
 ##  Installing the libraries
 
-
+The following steps have been tested on Ubuntu 18.04 "Bionic Beaver", but they should work on debian distributions.
 We can use apt-cache search to see what libblas debian packages are available to install
 ```
 apt-cache search libblas
@@ -509,4 +522,6 @@ https://developer.apple.com/documentation/accelerate
 
 * [Amadahl's Law](https://en.wikipedia.org/wiki/Amdahl%27s_law#Serial_programs)
 
+* [gcbd: 'GPU'/CPU Benchmarking in Debian-Based Systems](https://cran.r-project.org/web/packages/gcbd/index.html)
 
+* [Faster BLAS in R](http://brettklamer.com/diversions/statistical/faster-blas-in-r/)

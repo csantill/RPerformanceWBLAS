@@ -134,6 +134,8 @@ $(document).ready(function () {
 <p><a href="mailto:csantill@gmail.com">csantill@gmail.com</a></p>
 <p><a href="https://github.com/csantill/RPerformanceWBLAS" class="uri">https://github.com/csantill/RPerformanceWBLAS</a></p>
 <hr />
+<p>The precompiled R distribution that is downloaded from CRAN makes use of the reference BLAS/LAPACK implementation for linear algebra operations, These implementations are built to be stabled and cross platform compatible but are not optimized for performance.</p>
+<hr />
 </div>
 <div id="base-libraries" class="section level1">
 <h1>Base Libraries</h1>
@@ -198,11 +200,15 @@ $(document).ready(function () {
 <p>Features highly optimized, threaded, and vectorized math functions that maximize performance on each processor family Uses industry-standard C and Fortran APIs for compatibility with popular BLAS, LAPACK, and FFTW functions—no code changes required</p>
 <p>The Intel MKL used to a commercial product, free for student use, paid license for other uses, it looks like it is now free</p>
 <p><em>Free for all, no royalties, no restrictions on company or project size, access to current &amp; older versions of libraries (only current version for Intel® MPI), Forum Support.</em></p>
+</div>
+<div id="section" class="section level2">
+<h2></h2>
+<p>The above mentioned libraries are highly optimized for the Intel</p>
 <hr />
 </div>
 <div id="installing-the-libraries" class="section level2">
 <h2>Installing the libraries</h2>
-<p>We can use apt-cache search to see what libblas debian packages are available to install</p>
+<p>The following steps have been tested on Ubuntu 18.04 “Bionic Beaver”, but they should work on debian distributions. We can use apt-cache search to see what libblas debian packages are available to install</p>
 <pre><code>apt-cache search libblas</code></pre>
 <pre><code>csantill@gawain:/usr/bin$ apt-cache search libblas
 libblas-dev - Basic Linear Algebra Subroutines 3, static library
@@ -439,6 +445,8 @@ The percentageImprovent will be
 <li><p>GotoBLAS <a href="https://www.tacc.utexas.edu/research-development/tacc-software/gotoblas2" class="uri">https://www.tacc.utexas.edu/research-development/tacc-software/gotoblas2</a></p></li>
 <li><p>Apple Accelerate <a href="https://developer.apple.com/documentation/accelerate" class="uri">https://developer.apple.com/documentation/accelerate</a></p></li>
 <li><p><a href="https://en.wikipedia.org/wiki/Amdahl%27s_law#Serial_programs">Amadahl’s Law</a></p></li>
+<li><p><a href="https://cran.r-project.org/web/packages/gcbd/index.html">gcbd: ‘GPU’/CPU Benchmarking in Debian-Based Systems</a></p></li>
+<li><p><a href="http://brettklamer.com/diversions/statistical/faster-blas-in-r/">Faster BLAS in R</a></p></li>
 </ul>
 </div>
 
