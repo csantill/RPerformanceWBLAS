@@ -15,7 +15,7 @@ July 25th, 2018
 
 Carlos Santillan 
 
-Princpal Software Engineer 
+Principal Software Engineer 
 
 Bentley Systems Inc.
 
@@ -90,7 +90,7 @@ Here is the output when using the default BLAS/LAPACK libraries
 
 ***
 # Alternative libraries
-There are several highly optimized libraries that can be used instead of the default base libraries. These libraries are optimized to take advantage of the hardware they are run on, and can be significatantly faster than the base implementation (operations such as Matrix multiplications be be over 40 times faster)
+There are several highly optimized libraries that can be used instead of the default base libraries. These libraries are optimized to take advantage of the hardware they are run on, and can be significatantly faster than the base implementation (operations such as Matrix multiplications may be over 40 times faster)
 
 
 ##OpenBLAS
