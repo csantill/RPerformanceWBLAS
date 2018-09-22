@@ -38,7 +38,8 @@ You can use sessionInfo() in R to see which version of BLAS and LAPACK  your R s
 sessionInfo()
 ```
 
-Here is the output when using the default BLAS/LAPACK libraries
+Here is the output when using the default BLAS/LAPACK libraries on linux.
+
 
 ```
 ## BLAS: /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.7.1
@@ -74,7 +75,7 @@ Here is the output when using the default BLAS/LAPACK libraries
 
 
 # Alternative libraries
-There are several highly optimized libraries that can be used instead of the default base libraries. These libraries are optmized to take advantage the features of the CPU they are running on.  
+There are several highly optimized libraries that can be used instead of the default base libraries. These libraries are optmized to take advantage the features of the CPU they are running on , and can be significatantly faster than the base implementation (operations such as Matrix multiplications may be over 40 times faster)
 
 #GotoBLAS
 GotoBLAS and GotoBLAS2 are open source implementations of the BLAS (Basic Linear Algebra Subprograms) API with many hand-crafted optimizations for specific processor types. GotoBLAS was developed by Kazushige Goto at the Texas Advanced Computing Center (UT). In  2003, it was used in seven of the world's ten fastest supercomputers.
@@ -87,8 +88,6 @@ OpenBLAS is an optimized BLAS library based on GotoBLAS2 1.13 BSD version
 ##AtlasBLAS
 
 The ATLAS (Automatically Tuned Linear Algebra Software) project is an ongoing research effort focusing on applying empirical techniques in order to provide portable performance. 
-While the 
-
 
 
 ##Intel MKL
@@ -97,6 +96,10 @@ Intel Math Kernel Library
 
 Features highly optimized, threaded, and vectorized math functions that maximize performance on each processor family
 Uses industry-standard C and Fortran APIs for compatibility with popular BLAS, LAPACK, and FFTW functions—no code changes required
+
+The Intel MKL used to a commercial product, free for student use but a paid license was required for other uses, it looks like it is now free 
+
+*Free for all, no royalties, no restrictions on company or project size, access to current & older versions of libraries (only current version for Intel® MPI), Forum Support.*
 
 
 ##  Apple vecLib
@@ -121,15 +124,17 @@ https://mran.microsoft.com/open
 ## Should I use alternative BLAS libraries?
 
 Starting with Matlab v7  uses the Intel MKL when running in Intel based systems.  prior versions would use the ATLAS libraries
+GotoBLAS at one time ran on most of of the top worlds supercomputers in the world, ATLASBLAS is used for Matlab (for some platforms), Matlab uses Veclib on Mac. 
+I
+The Intel MKL library is the industry standard for Intel base computers, 
 
-Maple 
 
 
 
 
 ##  Installing the libraries on debian based sysmtes. 
 
-The following steps work for debian based systems (such as Ubuntu)
+The following steps have been tested on Ubuntu 18.04 "Bionic Beaver", but they should work on debian distributions.
 
 
 We can use apt-cache search to see what libblas debian packages are available to install
