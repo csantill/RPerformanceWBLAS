@@ -302,7 +302,7 @@ R Benchmark 2.5
 Number of times each test is run:  3
 
 | |  BLAS|	OpenBLAS|	MKL|   ATLASBLAS|
-| --- | --- | --- |	---  | --- |
+| --------------------------------------------- | ---------------- | ------------------ |	-------  | ------ |
 | A) Creation, transp., deformation of 2.5kx2.5k matrix |	1.424| 1.411|	1.611	| **1.371**|
 | B) 2.4Kx2.4K normal distributed random matrix ^1k |	1.028|	1.030| 1.030	| **1.024**|
 | C) Sorting of 7M random values |	1.423|	1.433| **1.346**	| 1.441|
@@ -332,7 +332,7 @@ dfnew <- melt(df ,id.vars='name')
 ```
 
 | |  BLAS|	OpenBLAS|	MKL|   ATLASBLAS|
-| --- | --- | --- |	---  | --- |
+| -------------------------------------------- | --- | --- |	---  | --- |
 | F) FFT over 2,400,000 random values |	0.575 | 0.535| 0.570| **0.534**|
 | G) Eigenvalues of a 640x640 random matrix |	1.470|	  1.028| **0.480**|  0.921|
 | H) Determinant of a 2500x2500 random matrix |	6.727| 0.456| **0.322**|	 1.873|
@@ -359,7 +359,7 @@ dfnew <- melt(df ,id.vars='name')
 
 
 | |  BLAS|	OpenBLAS|	MKL|   ATLASBLAS|
-| --- | --- | --- |	---  | --- |
+| ----------------------------------------------------------- | --- | --- |	---  | --- |
 | K) 3,500,000 Fibonacci numbers calculation (vector calc)| 1.069|1.035|1.006| **1.029**|
 | L) Creation of a 3000x3000 Hilbert matrix (matrix calc)| 0.530|0.497|0.510| **0.493**|
 | N) Grand common divisors of 400,000 pairs (recursion)|0.502|0.500|0.579|**0.478**|
@@ -410,16 +410,16 @@ The Intel MKL (Microsoft R open)) are the clear winners for the used configurati
 
 # Mac
 
-Apple provides the Accelarate Framework which includes optimized BLAS libraries (veclib).
+Apple provides the Accelarate Framework which includes optimized BLAS libraries (veclib). The R installation downloaded from CRAN ships with both the vecLib and reference BLAS libraries (The reference BLAS is used by default)
 
-
+The Mac OSX R FAQ 
+[10.5 Which BLAS is used and how can it be changed?](https://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html#Which-BLAS-is-used-and-how-can-it-be-changed_003f) describes the steps to change the default BLAS to use the vecLib.
 
 The following article [R: Use faster vecLib](https://gist.github.com/nicebread/6920c8287d7bffb03007)
 
 ```
 
-## Enter these commands in the Mac OS Terminal
-
+## 
 # use faster vecLib library
 cd /Library/Frameworks/R.framework/Resources/lib
 ln -sf  /System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Versions/Current/libBLAS.dylib libRblas.dylib
@@ -444,45 +444,49 @@ LAPACK: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/ve
 
 
 Benchmark 2.5
-   ===============
-Number of times each test is run__________________________:  3
 
-                                                          BLAS	                        vecLib BLAS
+Number of times each test is run:  3
 
-   I. Matrix calculation
-   ---------------------
-Creation, transp., deformation of a 2500x2500 matrix (sec):  0.911666666666668          0.907666666666665
-2400x2400 normal distributed random matrix ^1000____ (sec):  0.173000000000002          0.172666666666668
-Sorting of 7,000,000 random values__________________ (sec):  0.717000000000004          0.715333333333334
-2800x2800 cross-product matrix (b = a' * a)_________ (sec):  13.115                     0.472000000000001
-Linear regr. over a 3000x3000 matrix (c = a \ b')___ (sec):  6.31833333333333           0.429
-                      --------------------------------------------                      -----
-                 Trimmed geom. mean (2 extremes eliminated):  1.60442438940899           0.525173235045746
+
+  Matrix calculation 
+
+
+| |  BLAS|	vecLib |
+| ----------------------------------------------------------------------------- | --- | --- |
+| Creation, transp., deformation of a 2500x2500 matrix |   0.911666666666668 |          **0.907666666666665**| 
+| 2400x2400 normal distributed random matrix ^1000 |   0.173000000000002 |          **0.172666666666668**| 
+| Sorting of 7,000,000 random values |   0.717000000000004 |          **0.715333333333334**| 
+| 2800x2800 cross-product matrix (b = a' * a) |   13.115            |          **0.472000000000001**| 
+| Linear regr. over a 3000x3000 matrix (c = a \ b') |   6.31833333333333  |          **0.429**| 
+| Trimmed geom. mean (2 extremes eliminated) |  1.60442438940899  |         **0.525173235045746**|
 
    II. Matrix functions
-   --------------------
-FFT over 2,400,000 random values____________________ (sec):  0.424000000000007          0.469000000000001
-Eigenvalues of a 640x640 random matrix______________ (sec):  0.904666666666671          0.479333333333332
-Determinant of a 2500x2500 random matrix____________ (sec):  4.507                      0.379333333333335
-Cholesky decomposition of a 3000x3000 matrix________ (sec):  5.22133333333333           0.406666666666666
-Inverse of a 1600x1600 random matrix________________ (sec):  4.00333333333333           1.433
-                      --------------------------------------------                      -----
-                Trimmed geom. mean (2 extremes eliminated):  2.53668164510219           0.45048778200099
+   
+
+| |  BLAS|	vecLib |
+| ----------------------------------------------------------------------------- | --- | --- |
+| FFT over 2,400,000 random values| ** 0.424000000000007**|          0.469000000000001|
+| Eigenvalues of a 640x640 random matrix|  0.904666666666671|          **0.479333333333332**|
+| Determinant of a 2500x2500 random matrix|  4.507|                      **0.379333333333335**|
+| Cholesky decomposition of a 3000x3000 matrix|  5.22133333333333|           **0.406666666666666**|
+| Inverse of a 1600x1600 random matrix|  4.00333333333333|           **1.433**|
+|                Trimmed geom. mean (2 extremes eliminated)|  2.53668164510219  |         **0.45048778200099**|
 
    III. Programmation
-   ------------------
-3,500,000 Fibonacci numbers calculation (vector calc)(sec):  0.320000000000003          0.322666666666665
-Creation of a 3000x3000 Hilbert matrix (matrix calc) (sec):  0.336999999999989          0.349000000000004
-Grand common divisors of 400,000 pairs (recursion)__ (sec):  0.284666666666662          0.280000000000001
-Creation of a 500x500 Toeplitz matrix (loops)_______ (sec):  0.36099999999999           0.359666666666665
-Escoufier's method on a 45x45 matrix (mixed)________ (sec):  0.401999999999987          0.278000000000006
-                      --------------------------------------------                      -----
-                Trimmed geom. mean (2 extremes eliminated):  0.33891882626425           0.315921503050365
+   
+| |  BLAS|	vecLib |
+| ----------------------------------------------------------------------------- | --- | --- |
+| 3,500,000 Fibonacci numbers calculation (vector calc)|  **0.320000000000003**  |        0.322666666666665|
+| Creation of a 3000x3000 Hilbert matrix (matrix calc) |  **0.336999999999989** |         0.349000000000004|
+| Grand common divisors of 400,000 pairs (recursion) |  0.284666666666662  |        **0.280000000000001**|
+| Creation of a 500x500 Toeplitz matrix (loops) |  0.36099999999999  |         **0.359666666666665**|
+| Escoufier's method on a 45x45 matrix (mixed) |  0.401999999999987|          **0.278000000000006**|
+|     Trimmed geom. mean (2 extremes eliminated)|  0.33891882626425 |          **0.315921503050365**|
 
-
-Total time for all 15 tests_________________________ (sec):  38                         7.45333333333334
-Overall mean (sum of I, II and III trimmed means/3)_ (sec):  1.11316695385059           0.421232232758123
-                      --- End of test ---
+| |  BLAS|	vecLib |
+| ----------------------------------------------------------------------------- | --- | --- |
+|Total time for all 15 tests   |38  |                       **7.45333333333334**|
+|Overall mean (sum of I, II and III trimmed means/3)|  1.11316695385059 |          **0.421232232758123**|
 
 
 
@@ -490,7 +494,8 @@ Overall mean (sum of I, II and III trimmed means/3)_ (sec):  1.11316695385059   
 ***
 # Windows
 
-While it is possible to use alternative BLAS and LAPACK libraries on Windows, I found it easier just to use Microsoft R Open
+While it is possible to use alternative BLAS and LAPACK libraries on Windows, I could not found a source of updated precompiled binaries I found it easier just to use Microsoft R Open that uses the Intel MKL
+
 
 ***
 
