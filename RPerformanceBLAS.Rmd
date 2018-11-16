@@ -465,7 +465,7 @@ Number of times each test is run:  3
 
 | |  BLAS|	vecLib |
 | ----------------------------------------------------------------------------- | --- | --- |
-| FFT over 2,400,000 random values| ** 0.424000000000007**|          0.469000000000001|
+| FFT over 2,400,000 random values| **0.424000000000007**|          0.469000000000001|
 | Eigenvalues of a 640x640 random matrix|  0.904666666666671|          **0.479333333333332**|
 | Determinant of a 2500x2500 random matrix|  4.507|                      **0.379333333333335**|
 | Cholesky decomposition of a 3000x3000 matrix|  5.22133333333333|           **0.406666666666666**|
